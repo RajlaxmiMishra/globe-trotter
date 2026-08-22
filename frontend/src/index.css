@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #1A2E44;
+  --color-sky: #2E86C1;
+  --color-sand: #F5A623;
+  --color-mint: #27AE60;
+  --color-rose: #E74C3C;
+  --color-fog: #F0F4F8;
+  --color-fog-dark: #E2EAF0;
+  --color-ink-light: #2C4A66;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-sans: Inter, system-ui, sans-serif;
+  --shadow-card: 0 2px 8px rgba(26,46,68,0.08);
+  --shadow-card-hover: 0 8px 24px rgba(26,46,68,0.14);
+  --shadow-float: 0 4px 20px rgba(26,46,68,0.12);
+  --animate-fade-in: fadeIn 0.2s ease-out;
+  --animate-slide-up: slideUp 0.25s ease-out;
+  --keyframes-fadeIn-0: { opacity: 0 };
+  --keyframes-fadeIn-100: { opacity: 1 };
+  --keyframes-slideUp-0: { opacity: 0; transform: translateY(8px) };
+  --keyframes-slideUp-100: { opacity: 1; transform: translateY(0) };
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { font-family: var(--font-sans); color: var(--color-ink); background: var(--color-fog); }
+
+body { margin: 0; min-height: 100vh; }
+
+:focus-visible { outline: 2px solid var(--color-sky); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+.btn-primary {
+  @apply bg-sky text-white font-medium px-5 py-2.5 rounded-lg transition-all duration-150 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+.btn-secondary {
+  @apply bg-fog-dark text-ink font-medium px-5 py-2.5 rounded-lg transition-all duration-150 hover:bg-fog-dark/80 active:scale-95 disabled:opacity-50;
+}
+.btn-danger {
+  @apply bg-rose text-white font-medium px-5 py-2.5 rounded-lg transition-all duration-150 active:scale-95 disabled:opacity-50;
+}
+.input-field {
+  @apply w-full border border-fog-dark rounded-lg px-4 py-2.5 text-ink placeholder:text-ink/40 bg-white focus:outline-none focus:ring-2 focus:ring-sky/40 focus:border-sky transition-all duration-150;
+}
+.card {
+  @apply bg-white rounded-xl shadow-card p-5;
+}
