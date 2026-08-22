@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { Globe, Map, Plus, Search, BarChart2, User, LogOut, Activity } from 'lucide-react';
+import { userDisplayName } from '../../utils/user.js';
 
 const navItems = [
   { to: '/dashboard',  label: 'Dashboard',  icon: Globe },
@@ -67,7 +68,7 @@ export default function AppShell() {
             }
           >
             <User size={18} />
-            {user?.name ?? 'Profile'}
+            {userDisplayName(user) || 'Profile'}
           </NavLink>
           <button
             onClick={handleLogout}

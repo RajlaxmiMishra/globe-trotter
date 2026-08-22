@@ -287,13 +287,15 @@ async def seed():
             {
                 "email": "demo@globetrotter.io",
                 "password": "Demo1234!",
-                "name": "Demo Traveler",
+                "first_name": "Demo",
+                "last_name": "Traveler",
                 "role": "user",
             },
             {
                 "email": "admin@globetrotter.io",
                 "password": "Admin1234!",
-                "name": "Platform Admin",
+                "first_name": "Platform",
+                "last_name": "Admin",
                 "role": "admin",
             },
         ]
@@ -309,7 +311,8 @@ async def seed():
                 user = User(
                     email=acc["email"],
                     hashed_password=hash_password(acc["password"]),
-                    name=acc["name"],
+                    first_name=acc["first_name"],
+                    last_name=acc["last_name"],
                     role=acc["role"],
                 )
                 session.add(user)

@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
     RESET_TOKEN_EXPIRE_MINUTES: int = 60
     ENVIRONMENT: str = "development"
+    FRONTEND_ORIGIN: str = "http://localhost:5173"
 
 
 settings = Settings()

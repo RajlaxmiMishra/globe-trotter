@@ -29,14 +29,16 @@ async def test_signup_duplicate_email(client: AsyncClient):
 
 async def test_signup_weak_password(client: AsyncClient):
     resp = await client.post("/api/v1/auth/signup", json={
-        "email": "weak@example.com", "password": "short", "name": "Weak"
+        "email": "weak@example.com", "password": "short",
+        "first_name": "Weak", "last_name": "User",
     })
     assert resp.status_code == 422
 
 
 async def test_signup_invalid_email(client: AsyncClient):
     resp = await client.post("/api/v1/auth/signup", json={
-        "email": "not-an-email", "password": "Password1", "name": "Bad"
+        "email": "not-an-email", "password": "Password1",
+        "first_name": "Bad", "last_name": "User",
     })
     assert resp.status_code == 422
 
@@ -143,9 +145,21 @@ async def test_reset_token_single_use(client: AsyncClient):
 async def test_patch_me(client: AsyncClient):
     await create_user(client, email="patchme@example.com")
     headers = await auth_headers(client, email="patchme@example.com")
-    resp = await client.patch("/api/v1/users/me", headers=headers, json={"name": "Updated Name"})
+    resp = await client.patch("/api/v1/users/me", headers=headers, json={
+        "first_name": "Updated",
+        "last_name": "Name",
+        "phone_number": "+1-555-0100",
+        "city": "Paris",
+        "country": "France",
+    })
     assert resp.status_code == 200
-    assert resp.json()["name"] == "Updated Name"
+    data = resp.json()
+    assert data["first_name"] == "Updated"
+    assert data["last_name"] == "Name"
+    assert data["name"] == "Updated Name"
+    assert data["phone_number"] == "+1-555-0100"
+    assert data["city"] == "Paris"
+    assert data["country"] == "France"
 
 
 async def test_delete_me(client: AsyncClient):

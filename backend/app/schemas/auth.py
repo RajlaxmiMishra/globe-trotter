@@ -5,7 +5,13 @@ import re
 class SignupRequest(BaseModel):
     email: EmailStr
     password: str
-    name: str
+    first_name: str
+    last_name: str
+    phone_number: str | None = None
+    city: str | None = None
+    country: str | None = None
+    additional_info: str | None = None
+    photo_url: str | None = None
 
     @field_validator("password")
     @classmethod
@@ -16,6 +22,14 @@ class SignupRequest(BaseModel):
             raise ValueError("Password must contain at least one uppercase letter")
         if not re.search(r"[0-9]", v):
             raise ValueError("Password must contain at least one digit")
+        return v
+
+    @field_validator("first_name", "last_name")
+    @classmethod
+    def name_not_blank(cls, v: str) -> str:
+        v = v.strip()
+        if not v:
+            raise ValueError("Name fields cannot be blank")
         return v
 
 

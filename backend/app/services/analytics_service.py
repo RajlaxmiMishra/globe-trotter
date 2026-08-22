@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta, timezone
 
-from sqlalchemy import select, func, cast, Date, text
+from sqlalchemy import select, func, cast, Date, extract
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.trip import Trip
@@ -78,21 +78,24 @@ async def get_analytics(db: AsyncSession) -> dict:
     public_trips = public_trips_result.scalar_one() or 0
 
     # --- trips_by_month (last 12 months) ---
-    from sqlalchemy import extract
-    from datetime import timedelta
     one_year_ago = (datetime.now(timezone.utc) - timedelta(days=365)).date()
 
     trips_by_month_result = await db.execute(
         select(
-            func.to_char(Trip.created_at, "Mon YYYY").label("month"),
+            extract("year", Trip.created_at).label("year"),
+            extract("month", Trip.created_at).label("month"),
             func.count(Trip.id).label("count"),
         )
         .where(cast(Trip.created_at, Date) >= one_year_ago)
-        .group_by(func.to_char(Trip.created_at, "Mon YYYY"), extract("year", Trip.created_at), extract("month", Trip.created_at))
+        .group_by(extract("year", Trip.created_at), extract("month", Trip.created_at))
         .order_by(extract("year", Trip.created_at), extract("month", Trip.created_at))
     )
+    month_names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     trips_by_month = [
-        {"month": row.month, "count": row.count}
+        {
+            "month": f"{month_names[int(row.month) - 1]} {int(row.year)}",
+            "count": row.count,
+        }
         for row in trips_by_month_result
     ]
 

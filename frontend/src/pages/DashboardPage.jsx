@@ -8,6 +8,7 @@ import Spinner from '../components/ui/Spinner.jsx';
 import Button from '../components/ui/Button.jsx';
 import EmptyState from '../components/ui/EmptyState.jsx';
 import Badge from '../components/ui/Badge.jsx';
+import { userFirstName } from '../utils/user.js';
 
 function MiniRoute({ count }) {
   const dots = Math.min(count, 5);
@@ -117,7 +118,7 @@ export default function DashboardPage() {
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
           <h1 className="font-display text-3xl font-bold text-ink">
-            Welcome back, {user?.name?.split(' ')[0] ?? 'Traveler'} ✈️
+            Welcome back, {userFirstName(user)} ✈️
           </h1>
           <p className="text-ink/50 mt-1 text-sm">Where are you headed next?</p>
         </div>

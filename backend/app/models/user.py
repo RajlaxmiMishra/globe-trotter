@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime, timezone
-from sqlalchemy import String, TIMESTAMP, text
+from sqlalchemy import String, Text, TIMESTAMP, text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.database import Base
 
@@ -13,7 +13,12 @@ class User(Base):
     )
     email: Mapped[str] = mapped_column(String(255), nullable=False, unique=True, index=True)
     hashed_password: Mapped[str] = mapped_column(String(255), nullable=False)
-    name: Mapped[str | None] = mapped_column(String(255))
+    first_name: Mapped[str | None] = mapped_column(String(255))
+    last_name: Mapped[str | None] = mapped_column(String(255))
+    phone_number: Mapped[str | None] = mapped_column(String(50))
+    city: Mapped[str | None] = mapped_column(String(255))
+    country: Mapped[str | None] = mapped_column(String(255))
+    additional_info: Mapped[str | None] = mapped_column(Text)
     photo_url: Mapped[str | None] = mapped_column(String(512))
     language_pref: Mapped[str] = mapped_column(String(10), default="en", server_default="en")
     role: Mapped[str] = mapped_column(String(20), nullable=False, default="user", server_default="user")
@@ -31,3 +36,8 @@ class User(Base):
     password_reset_tokens: Mapped[list["PasswordResetToken"]] = relationship(
         "PasswordResetToken", back_populates="user", cascade="all, delete-orphan"
     )
+
+    @property
+    def display_name(self) -> str:
+        parts = [p for p in (self.first_name, self.last_name) if p]
+        return " ".join(parts)

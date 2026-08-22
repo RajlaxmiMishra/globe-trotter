@@ -72,8 +72,12 @@ async def client(db_session):
 # ---------------------------------------------------------------------------
 
 async def get_token(client: AsyncClient, email: str, password: str = "Password1") -> str:
-    await client.post("/api/v1/auth/signup",
-                      json={"email": email, "password": password, "name": "Tester"})
+    await client.post("/api/v1/auth/signup", json={
+        "email": email,
+        "password": password,
+        "first_name": "Test",
+        "last_name": "User",
+    })
     resp = await client.post("/api/v1/auth/login",
                              json={"email": email, "password": password})
     assert resp.status_code == 200, f"Login failed for {email}: {resp.text}"
@@ -86,6 +90,12 @@ async def auth_headers(client: AsyncClient, email: str = "test@example.com",
 
 
 async def create_user(client: AsyncClient, email="test@example.com",
-                      password="Password1", name="Tester"):
-    return await client.post("/api/v1/auth/signup",
-                             json={"email": email, "password": password, "name": name})
+                      password="Password1", first_name="Test", last_name="User", **extra):
+    payload = {
+        "email": email,
+        "password": password,
+        "first_name": first_name,
+        "last_name": last_name,
+        **extra,
+    }
+    return await client.post("/api/v1/auth/signup", json=payload)

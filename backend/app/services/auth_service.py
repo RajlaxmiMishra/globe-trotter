@@ -12,15 +12,21 @@ from app.models.user import User
 from app.models.password_reset_token import PasswordResetToken
 
 
-async def signup(db: AsyncSession, email: str, password: str, name: str) -> User:
-    result = await db.execute(select(User).where(User.email == email))
+async def signup(db: AsyncSession, data: dict) -> User:
+    result = await db.execute(select(User).where(User.email == data["email"]))
     if result.scalar_one_or_none():
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email already registered")
 
     user = User(
-        email=email,
-        hashed_password=hash_password(password),
-        name=name,
+        email=data["email"],
+        hashed_password=hash_password(data["password"]),
+        first_name=data["first_name"],
+        last_name=data["last_name"],
+        phone_number=data.get("phone_number"),
+        city=data.get("city"),
+        country=data.get("country"),
+        additional_info=data.get("additional_info"),
+        photo_url=data.get("photo_url"),
     )
     db.add(user)
     await db.commit()

@@ -21,7 +21,7 @@ router = APIRouter()
 
 @router.post("/signup", response_model=UserSignupOut, status_code=201)
 async def signup(body: SignupRequest, db: AsyncSession = Depends(get_db)):
-    user = await auth_service.signup(db, email=body.email, password=body.password, name=body.name)
+    user = await auth_service.signup(db, data=body.model_dump())
     return user
 
 

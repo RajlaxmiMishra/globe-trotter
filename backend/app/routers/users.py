@@ -10,6 +10,17 @@ from app.schemas.auth import MessageResponse  # shared message schema
 
 router = APIRouter()
 
+_PROFILE_FIELDS = (
+    "first_name",
+    "last_name",
+    "phone_number",
+    "city",
+    "country",
+    "additional_info",
+    "photo_url",
+    "language_pref",
+)
+
 
 @router.get("/me", response_model=UserOut)
 async def get_me(current_user: User = Depends(get_current_user)):
@@ -22,12 +33,10 @@ async def update_me(
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    if body.name is not None:
-        current_user.name = body.name
-    if body.photo_url is not None:
-        current_user.photo_url = body.photo_url
-    if body.language_pref is not None:
-        current_user.language_pref = body.language_pref
+    updates = body.model_dump(exclude_unset=True)
+    for field in _PROFILE_FIELDS:
+        if field in updates:
+            setattr(current_user, field, updates[field])
     current_user.updated_at = datetime.now(timezone.utc)
     await db.commit()
     await db.refresh(current_user)

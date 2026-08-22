@@ -13,6 +13,7 @@ from app.core.exceptions import (
 )
 from app.core.rate_limit import limiter
 from app.routers import auth, users, trips, stops, cities, activities, stop_activities, itinerary, budget, public, admin
+from app.config import settings
 
 app = FastAPI(
     title="GlobeTrotter API",
@@ -27,7 +28,7 @@ app.state.limiter = limiter
 app.add_middleware(SlowAPIMiddleware)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[settings.FRONTEND_ORIGIN],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
