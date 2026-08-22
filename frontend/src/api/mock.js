@@ -1,9 +1,9 @@
-﻿// Mock delay helper
+// Mock delay helper
 const delay = (ms = 350) => new Promise(r => setTimeout(r, ms));
 
 // ─── Auth ────────────────────────────────────────────────────
 let mockUsers = [
-  { id: 'u-1', email: 'demo@globetrotter.io', name: 'Priya Sharma', photo_url: null, language_pref: 'en', role: 'user' },
+  { id: 'u-1', email: 'demo@globetrotter.io', name: 'Prathmesh Sharma', photo_url: null, language_pref: 'en', role: 'user' },
   { id: 'u-admin', email: 'admin@globetrotter.io', name: 'Admin User', photo_url: null, language_pref: 'en', role: 'admin' },
 ];
 let mockPasswords = { 'demo@globetrotter.io': 'Demo1234', 'admin@globetrotter.io': 'Admin1234' };
@@ -243,7 +243,7 @@ export const mockGetPublicTrip = async (slug) => {
   if (!trip) { const e = new Error('Trip not found or no longer public'); e.status = 404; throw e; }
   const stops = mockStops.filter(s => s.trip_id === trip.id);
   const stopsWithActs = stops.map(stop => ({ ...stop, activities: mockStopActivities.filter(sa => sa.stop_id === stop.id) }));
-  return { ...trip, owner_name: 'Priya S.', stops: stopsWithActs };
+  return { ...trip, owner_name: 'Prathmesh S.', stops: stopsWithActs };
 };
 export const mockCopyTrip = async (slug) => {
   await delay(800);
