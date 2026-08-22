@@ -38,7 +38,7 @@ export default function SignupPage() {
         <div>
           <label className="text-sm font-medium text-white/70 block mb-1">Full Name</label>
           <input
-            type="text" placeholder="Priya Sharma" autoComplete="name"
+            type="text" placeholder="Prathmesh Sharma" autoComplete="name"
             className={fieldCls(errors.name)}
             {...register('name', { required: 'Name is required' })}
           />
