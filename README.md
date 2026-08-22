@@ -20,23 +20,6 @@ GlobeTrotter is a powerful, modern multi-city travel planning platform designed 
 
 ## Getting Started
 
-### Running Locally
-
-Currently, the frontend application is wired to run via a completely local, in-memory mock API. You do not need any backend services running to test the complete application flow.
-
-1. Navigate to the frontend directory:
-   `ash
-   cd frontend
-   `
-2. Install dependencies:
-   `ash
-   npm install
-   `
-3. Start the Vite development server:
-   `ash
-   npm run dev
-   `
-4. Open http://localhost:5173 in your browser.
 
 **Demo Credentials:**
 - Email: demo@globetrotter.io
