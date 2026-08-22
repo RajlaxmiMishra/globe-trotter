@@ -91,8 +91,8 @@ export default function LoginPage() {
         <Link to="/auth/signup" className="text-sky hover:underline font-medium">Create one</Link>
       </p>
       <div className="mt-5 p-3 bg-white/5 rounded-lg text-xs text-white/40 space-y-0.5">
-        <p>Demo: <span className="text-white/60">demo@globetrotter.io / Demo1234</span></p>
-        <p>Admin: <span className="text-white/60">admin@globetrotter.io / Admin1234</span></p>
+        <p>Demo: <span className="text-white/60">demo@globetrotter.io / Demo1234!</span></p>
+        <p>Admin: <span className="text-white/60">admin@globetrotter.io / Admin1234!</span></p>
       </div>
     </AuthLayout>
   );
