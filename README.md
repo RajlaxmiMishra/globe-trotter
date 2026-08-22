@@ -25,9 +25,4 @@ GlobeTrotter is a powerful, modern multi-city travel planning platform designed 
 - Email: demo@globetrotter.io
 - Password: Demo1234
 
-### Connecting to a Real Backend
-When your real API is ready, you can seamlessly switch over by creating a .env file in the rontend directory:
-`env
-VITE_USE_MOCK=false
-VITE_API_BASE_URL=http://localhost:8000
-`
+
